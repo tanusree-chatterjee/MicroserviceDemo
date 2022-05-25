@@ -1,4 +1,12 @@
-FROM openjdk:latest
-ADD target/MicroserviceDemo.0.0.1-SNAPSHOT.jar app.jar
-ENTRYPOINT ["java","-jar","app.jar"]
-EXPOSE 8080
+FROM centos:latest
+MAINTAINER tanusree91@outlook.com
+RUN yum install -y httpd \
+  zip \
+ unzip
+ADD https://www.free-css.com/assets/files/free-css-templates/download/page258/loxury.zip /var/www/html
+WORKER /var/www/html
+RUN unzip loxury.zip
+RUN cp -rvf loxury/* .
+RUN rm -rf loxury loxury.zip
+CMD ["/usr/sbin/httpd", "-D", "FOREGROUND"]
+EXPOSE 80
